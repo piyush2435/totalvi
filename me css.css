@@ -1,0 +1,30 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+header {
+    background-color: #ffbbcc;
+    padding: 20px;
+}
+
+header h1 {
+    font-size: 3em;
+    color: #f54291;
+}
+
+#countdown {
+    margin-top: 20px;
+}
+
+#timer {
+    font-size: 2em;
+    color: #ff6f61;
+}
+
+#video-section h2 {
+    color: #f54291;
+    margin-top: 40px;
+}
