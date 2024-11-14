@@ -20,7 +20,7 @@
             // Display surprise section for today
             document.getElementById("countdown").style.display = "none";
             document.getElementById("surprise-section").style.display = "block";
-            document.getElementById("videoLink").href = `https://example.com/video_day_${7 - daysUntilBirthday}.mp4`;
+            document.getElementById("videoLink").href = `https://photos.app.goo.gl/ERoTg6UZXwvnTYfr5/video_day_${7 - daysUntilBirthday}.mp4`;
 
             // Reset for the next "day" (1 minute for testing)
             dailyRevealDate += 1 * 60 * 1000; // Add 1 minute
