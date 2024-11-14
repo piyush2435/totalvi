@@ -1,7 +1,6 @@
 window.onload = function () {
-    // Set the birthday date (7 minutes from now for testing)
-    const birthdayDate = new Date().getTime() + 7 * 60 * 1000;
-    let dailyRevealDate = new Date().getTime() + 1 * 60 * 1000; // Each "day" is 1 minute
+    const birthdayDate = new Date().getTime() + 7 * 24 * 60 * 60 * 1000;
+    let dailyRevealDate = new Date().getTime() + 1 * 60 * 1000; // For testing, each "day" lasts 1 minute.
 
     function updateCountdown() {
         const now = new Date().getTime();
@@ -10,39 +9,57 @@ window.onload = function () {
         const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        // Display the countdown
         document.getElementById("timer").innerHTML = `${minutes}m ${seconds}s`;
 
-        // If the countdown reaches zero
         if (distance < 0) {
             clearInterval(countdownTimer);
-
-            // Display surprise section for today
             document.getElementById("countdown").style.display = "none";
             document.getElementById("surprise-section").style.display = "block";
-            document.getElementById("videoLink").href = `https://example.com/video_day_${7 - daysUntilBirthday}.mp4`;
 
-            // Reset for the next "day" (1 minute for testing)
-            dailyRevealDate += 1 * 60 * 1000; // Add 1 minute
+            const dayNumber = 8 - daysUntilBirthday;
+            document.getElementById("dayLabel").innerText = `Day ${dayNumber} Surprise`;
+            document.getElementById("videoLink").innerText = `Click here for Day ${dayNumber} Video!`;
+            document.getElementById("videoLink").href = `https://example.com/day${dayNumber}_video.mp4`;
+
+            dailyRevealDate += 1 * 60 * 1000;
             daysUntilBirthday--;
 
             if (daysUntilBirthday < 0) {
-                // Show final birthday message
                 document.getElementById("surprise-section").style.display = "none";
                 document.getElementById("birthday-section").style.display = "block";
             } else {
-                // Re-enable countdown after showing today's surprise
                 setTimeout(() => {
                     document.getElementById("countdown").style.display = "block";
                     document.getElementById("surprise-section").style.display = "none";
                     countdownTimer = setInterval(updateCountdown, 1000);
-                }, 10000);  // Show surprise for 10 seconds before resetting
+                }, 10000);
             }
         }
     }
 
-    let daysUntilBirthday = 7;  // Total "days" until birthday (7 minutes for testing)
+    let daysUntilBirthday = 7;
     let countdownTimer = setInterval(updateCountdown, 1000);
 };
 
+// Show the response form after clicking the video link
+function showResponseForm() {
+    document.getElementById("surprise-section").style.display = "none";
+    document.getElementById("response-section").style.display = "block";
+}
+
+// Handle form submission
+function submitResponse() {
+    const message = document.getElementById("message").value;
+    const photo = document.getElementById("photo").files[0];
+
+    if (photo && message) {
+        alert("Response submitted! Thank you for your message and photo.");
+        
+        document.getElementById("responseForm").reset();
+        document.getElementById("response-section").style.display = "none";
+        document.getElementById("countdown").style.display = "block";
+    } else {
+        alert("Please complete both fields.");
+    }
+}
 
