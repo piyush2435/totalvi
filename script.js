@@ -2,6 +2,9 @@ window.onload = function () {
     const birthdayDate = new Date().getTime() + 7 * 24 * 60 * 60 * 1000;
     let dailyRevealDate = new Date().getTime() + 1 * 60 * 1000; // For testing, each "day" lasts 1 minute.
 
+    // Load previously revealed links from local storage
+    loadRevealedLinks();
+
     function updateCountdown() {
         const now = new Date().getTime();
         const distance = dailyRevealDate - now;
@@ -23,8 +26,9 @@ window.onload = function () {
             document.getElementById("videoLink").innerText = `Click here for Day ${dayNumber} Video!`;
             document.getElementById("videoLink").href = videoLink;
 
-            // Add this link to the "All Surprise Links" section
+            // Add this link to the "All Surprise Links" section and local storage
             addLinkToAllLinks(dayNumber, videoLink);
+            saveLinkToLocalStorage(dayNumber, videoLink);
 
             dailyRevealDate += 1 * 60 * 1000;
             daysUntilBirthday--;
@@ -60,6 +64,21 @@ function addLinkToAllLinks(dayNumber, link) {
     const linkParagraph = document.createElement("p");
     linkParagraph.innerHTML = `<a href="${link}" target="_blank">Day ${dayNumber} Video</a>`;
     allLinksList.appendChild(linkParagraph);
+}
+
+// Save the revealed link to local storage
+function saveLinkToLocalStorage(dayNumber, link) {
+    let revealedLinks = JSON.parse(localStorage.getItem("revealedLinks")) || [];
+    revealedLinks.push({ dayNumber, link });
+    localStorage.setItem("revealedLinks", JSON.stringify(revealedLinks));
+}
+
+// Load all revealed links from local storage
+function loadRevealedLinks() {
+    const revealedLinks = JSON.parse(localStorage.getItem("revealedLinks")) || [];
+    revealedLinks.forEach(linkInfo => {
+        addLinkToAllLinks(linkInfo.dayNumber, linkInfo.link);
+    });
 }
 
 // Handle form submission
