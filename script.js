@@ -1,18 +1,17 @@
-window.onload = function () {
-    // Set the birthday date
-    const birthdayDate = new Date("December 4, 2024 00:00:00").getTime();
-    let dailyRevealDate = new Date(birthdayDate - 7 * 24 * 60 * 60 * 1000).getTime();
+ window.onload = function () {
+    // Set the birthday date (7 minutes from now for testing)
+    const birthdayDate = new Date().getTime() + 7 * 60 * 1000;
+    let dailyRevealDate = new Date().getTime() + 1 * 60 * 1000; // Each "day" is 1 minute
 
     function updateCountdown() {
         const now = new Date().getTime();
         const distance = dailyRevealDate - now;
 
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
         // Display the countdown
-        document.getElementById("timer").innerHTML = `${hours}h ${minutes}m ${seconds}s`;
+        document.getElementById("timer").innerHTML = `${minutes}m ${seconds}s`;
 
         // If the countdown reaches zero
         if (distance < 0) {
@@ -23,8 +22,8 @@ window.onload = function () {
             document.getElementById("surprise-section").style.display = "block";
             document.getElementById("videoLink").href = `https://example.com/video_day_${7 - daysUntilBirthday}.mp4`;
 
-            // Reset for the next day after showing the surprise
-            dailyRevealDate += 24 * 60 * 60 * 1000;  // Add 24 hours
+            // Reset for the next "day" (1 minute for testing)
+            dailyRevealDate += 1 * 60 * 1000; // Add 1 minute
             daysUntilBirthday--;
 
             if (daysUntilBirthday < 0) {
@@ -42,7 +41,8 @@ window.onload = function () {
         }
     }
 
-    let daysUntilBirthday = 7;
+    let daysUntilBirthday = 7;  // Total "days" until birthday (7 minutes for testing)
     let countdownTimer = setInterval(updateCountdown, 1000);
 };
+         
 
