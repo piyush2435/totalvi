@@ -1,7 +1,7 @@
 window.onload = function () {
-    // Current time plus 7 minutes for testing
+    // Set the birthday date (7 minutes from now for testing)
     const birthdayDate = new Date().getTime() + 7 * 60 * 1000;
-    let dailyRevealDate = new Date().getTime() + 1 * 60 * 1000; // Each "day" lasts 1 minute for testing
+    let dailyRevealDate = new Date().getTime() + 1 * 60 * 1000; // Each "day" is 1 minute
 
     function updateCountdown() {
         const now = new Date().getTime();
@@ -20,15 +20,10 @@ window.onload = function () {
             // Display surprise section for today
             document.getElementById("countdown").style.display = "none";
             document.getElementById("surprise-section").style.display = "block";
-
-            // Update the link and label based on the day
-            const dayNumber = 8 - daysUntilBirthday;  // Day number from 1 to 7
-            document.getElementById("dayLabel").innerText = `Day ${dayNumber} Surprise`;
-            document.getElementById("videoLink").innerText = `Click here for Day ${dayNumber} Video!`;
-            document.getElementById("videoLink").href = `https://example.com/day${dayNumber}_video.mp4`;
+            document.getElementById("videoLink").href = `https://example.com/video_day_${7 - daysUntilBirthday}.mp4`;
 
             // Reset for the next "day" (1 minute for testing)
-            dailyRevealDate += 1 * 60 * 1000; // Add 1 minute for the next day's surprise
+            dailyRevealDate += 1 * 60 * 1000; // Add 1 minute
             daysUntilBirthday--;
 
             if (daysUntilBirthday < 0) {
@@ -49,4 +44,5 @@ window.onload = function () {
     let daysUntilBirthday = 7;  // Total "days" until birthday (7 minutes for testing)
     let countdownTimer = setInterval(updateCountdown, 1000);
 };
+
 
