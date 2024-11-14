@@ -17,9 +17,14 @@ window.onload = function () {
             document.getElementById("surprise-section").style.display = "block";
 
             const dayNumber = 8 - daysUntilBirthday;
+            const videoLink = `https://example.com/day${dayNumber}_video.mp4`;
+
             document.getElementById("dayLabel").innerText = `Day ${dayNumber} Surprise`;
             document.getElementById("videoLink").innerText = `Click here for Day ${dayNumber} Video!`;
-            document.getElementById("videoLink").href = `https://example.com/day${dayNumber}_video.mp4`;
+            document.getElementById("videoLink").href = videoLink;
+
+            // Add this link to the "All Surprise Links" section
+            addLinkToAllLinks(dayNumber, videoLink);
 
             dailyRevealDate += 1 * 60 * 1000;
             daysUntilBirthday--;
@@ -45,6 +50,16 @@ window.onload = function () {
 function showResponseForm() {
     document.getElementById("surprise-section").style.display = "none";
     document.getElementById("response-section").style.display = "block";
+}
+
+// Function to add each new link to the "All Surprise Links" section
+function addLinkToAllLinks(dayNumber, link) {
+    const allLinksList = document.getElementById("all-links-list");
+
+    // Create a new paragraph for each day's link
+    const linkParagraph = document.createElement("p");
+    linkParagraph.innerHTML = `<a href="${link}" target="_blank">Day ${dayNumber} Video</a>`;
+    allLinksList.appendChild(linkParagraph);
 }
 
 // Handle form submission
