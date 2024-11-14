@@ -18,11 +18,18 @@
 
     <section id="surprise-section" style="display: none;">
         <h2 id="dayLabel">Today's Surprise</h2>
-        <p><a id="videoLink" href="" target="_blank" onclick="showResponseForm()">Click here for Day 1 Video!</a></p>
+        <p><a id="videoLink" href="" target="_blank" onclick="showResponseForm()">Click here for today's video!</a></p>
         <p>Come back in 24 hours for your next surprise!</p>
     </section>
 
-    <!-- Response form section -->
+    <!-- Section to display all revealed links -->
+    <section id="all-links-section">
+        <h2>All Surprise Links</h2>
+        <div id="all-links-list">
+            <!-- All revealed links will appear here -->
+        </div>
+    </section>
+
     <section id="response-section" style="display: none;">
         <h2>Share Your Reaction!</h2>
         <form id="responseForm" onsubmit="submitResponse(); return false;">
@@ -42,3 +49,4 @@
     <script src="script.js"></script>
 </body>
 </html>
+
