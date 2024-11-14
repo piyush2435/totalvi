@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Birthday Countdown</title>
+    <title>Birthday Countdown with Response</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -16,14 +16,24 @@
         <div id="timer"></div>
     </section>
 
-    <!-- Daily surprise message section -->
     <section id="surprise-section" style="display: none;">
         <h2 id="dayLabel">Today's Surprise</h2>
-        <p><a id="videoLink" href="" target="_blank">Click here for your surprise!</a></p>
+        <p><a id="videoLink" href="" target="_blank" onclick="showResponseForm()">Click here for Day 1 Video!</a></p>
         <p>Come back in 24 hours for your next surprise!</p>
     </section>
 
-    <!-- Final birthday message section -->
+    <!-- Response form section -->
+    <section id="response-section" style="display: none;">
+        <h2>Share Your Reaction!</h2>
+        <form id="responseForm" onsubmit="submitResponse(); return false;">
+            <label for="message">Write a message:</label><br>
+            <textarea id="message" name="message" rows="4" cols="50" required></textarea><br><br>
+            <label for="photo">Upload a photo:</label><br>
+            <input type="file" id="photo" name="photo" accept="image/*" required><br><br>
+            <button type="submit">Submit Response</button>
+        </form>
+    </section>
+
     <section id="birthday-section" style="display: none;">
         <h2>Happy Birthday, Masi! 🎉</h2>
         <p>Hope you enjoyed a week of surprises!</p>
