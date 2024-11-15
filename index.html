@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Birthday Countdown with Response</title>
+    <title>Birthday Countdown with Surprise Videos</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -18,27 +18,19 @@
 
     <section id="surprise-section" style="display: none;">
         <h2 id="dayLabel">Today's Surprise</h2>
-        <p><a id="videoLink" href="" target="_blank" onclick="showResponseForm()">Click here for today's video!</a></p>
+        <video id="videoPlayer" width="640" height="360" controls style="display: none;">
+            <source id="videoSource" src="" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
         <p>Come back in 24 hours for your next surprise!</p>
     </section>
 
-    <!-- Section to display all revealed links -->
-    <section id="all-links-section">
-        <h2>All Surprise Links</h2>
-        <div id="all-links-list">
-            <!-- All revealed links will appear here -->
+    <!-- Section to display all revealed videos -->
+    <section id="all-videos-section">
+        <h2>All Surprise Videos</h2>
+        <div id="all-videos-list">
+            <!-- All revealed videos will appear here -->
         </div>
-    </section>
-
-    <section id="response-section" style="display: none;">
-        <h2>Share Your Reaction!</h2>
-        <form id="responseForm" onsubmit="submitResponse(); return false;">
-            <label for="message">Write a message:</label><br>
-            <textarea id="message" name="message" rows="4" cols="50" required></textarea><br><br>
-            <label for="photo">Upload a photo:</label><br>
-            <input type="file" id="photo" name="photo" accept="image/*" required><br><br>
-            <button type="submit">Submit Response</button>
-        </form>
     </section>
 
     <section id="birthday-section" style="display: none;">
