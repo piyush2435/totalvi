@@ -2,8 +2,8 @@ window.onload = function () {
     const birthdayDate = new Date().getTime() + 7 * 24 * 60 * 60 * 1000;
     let dailyRevealDate = new Date().getTime() + 1 * 60 * 1000; // For testing, each "day" lasts 1 minute.
 
-    // Load previously revealed links from local storage
-    loadRevealedLinks();
+    // Load previously revealed videos from local storage
+    loadRevealedVideos();
 
     function updateCountdown() {
         const now = new Date().getTime();
@@ -18,17 +18,18 @@ window.onload = function () {
             clearInterval(countdownTimer);
             document.getElementById("countdown").style.display = "none";
             document.getElementById("surprise-section").style.display = "block";
+            document.getElementById("videoPlayer").style.display = "block";
 
             const dayNumber = 8 - daysUntilBirthday;
-            const videoLink = `https://example.com/day${dayNumber}_video.mp4`;
+            const videoSource = `videos/day${dayNumber}_video.mp4`;
 
             document.getElementById("dayLabel").innerText = `Day ${dayNumber} Surprise`;
-            document.getElementById("videoLink").innerText = `Click here for Day ${dayNumber} Video!`;
-            document.getElementById("videoLink").href = videoLink;
+            document.getElementById("videoSource").src = videoSource;
+            document.getElementById("videoPlayer").load();
 
-            // Add this link to the "All Surprise Links" section and local storage
-            addLinkToAllLinks(dayNumber, videoLink);
-            saveLinkToLocalStorage(dayNumber, videoLink);
+            // Add this video to the "All Surprise Videos" section and local storage
+            addVideoToAllVideos(dayNumber, videoSource);
+            saveVideoToLocalStorage(dayNumber, videoSource);
 
             dailyRevealDate += 1 * 60 * 1000;
             daysUntilBirthday--;
@@ -50,50 +51,38 @@ window.onload = function () {
     let countdownTimer = setInterval(updateCountdown, 1000);
 };
 
-// Show the response form after clicking the video link
-function showResponseForm() {
-    document.getElementById("surprise-section").style.display = "none";
-    document.getElementById("response-section").style.display = "block";
+// Function to add each new video to the "All Surprise Videos" section
+function addVideoToAllVideos(dayNumber, videoSource) {
+    const allVideosList = document.getElementById("all-videos-list");
+
+    const videoElement = document.createElement("video");
+    videoElement.width = 320;
+    videoElement.height = 180;
+    videoElement.controls = true;
+
+    const sourceElement = document.createElement("source");
+    sourceElement.src = videoSource;
+    sourceElement.type = "video/mp4";
+
+    videoElement.appendChild(sourceElement);
+
+    const videoLabel = document.createElement("p");
+    videoLabel.innerText = `Day ${dayNumber} Video`;
+    allVideosList.appendChild(videoLabel);
+    allVideosList.appendChild(videoElement);
 }
 
-// Function to add each new link to the "All Surprise Links" section
-function addLinkToAllLinks(dayNumber, link) {
-    const allLinksList = document.getElementById("all-links-list");
-
-    // Create a new paragraph for each day's link
-    const linkParagraph = document.createElement("p");
-    linkParagraph.innerHTML = `<a href="${link}" target="_blank">Day ${dayNumber} Video</a>`;
-    allLinksList.appendChild(linkParagraph);
+// Save the revealed video to local storage
+function saveVideoToLocalStorage(dayNumber, videoSource) {
+    let revealedVideos = JSON.parse(localStorage.getItem("revealedVideos")) || [];
+    revealedVideos.push({ dayNumber, videoSource });
+    localStorage.setItem("revealedVideos", JSON.stringify(revealedVideos));
 }
 
-// Save the revealed link to local storage
-function saveLinkToLocalStorage(dayNumber, link) {
-    let revealedLinks = JSON.parse(localStorage.getItem("revealedLinks")) || [];
-    revealedLinks.push({ dayNumber, link });
-    localStorage.setItem("revealedLinks", JSON.stringify(revealedLinks));
-}
-
-// Load all revealed links from local storage
-function loadRevealedLinks() {
-    const revealedLinks = JSON.parse(localStorage.getItem("revealedLinks")) || [];
-    revealedLinks.forEach(linkInfo => {
-        addLinkToAllLinks(linkInfo.dayNumber, linkInfo.link);
+// Load all revealed videos from local storage
+function loadRevealedVideos() {
+    const revealedVideos = JSON.parse(localStorage.getItem("revealedVideos")) || [];
+    revealedVideos.forEach(videoInfo => {
+        addVideoToAllVideos(videoInfo.dayNumber, videoInfo.videoSource);
     });
 }
-
-// Handle form submission
-function submitResponse() {
-    const message = document.getElementById("message").value;
-    const photo = document.getElementById("photo").files[0];
-
-    if (photo && message) {
-        alert("Response submitted! Thank you for your message and photo.");
-        
-        document.getElementById("responseForm").reset();
-        document.getElementById("response-section").style.display = "none";
-        document.getElementById("countdown").style.display = "block";
-    } else {
-        alert("Please complete both fields.");
-    }
-}
-
